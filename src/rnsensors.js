@@ -3,10 +3,11 @@ const {
   Gyroscope: GyroNative,
   Accelerometer: AccNative,
   Magnetometer: MagnNative,
-  Barometer: BarNative
+  Barometer: BarNative,
+  Rotation: RotateNative,
 } = NativeModules;
 
-if (!GyroNative && !AccNative && !MagnNative && !BarNative) {
+if (!GyroNative && !AccNative && !MagnNative && !BarNative && !RotateNative) {
   throw new Error(
     "Native modules for sensors not available. Did react-native link run successfully?"
   );
@@ -16,14 +17,15 @@ const nativeApis = new Map([
   ["accelerometer", AccNative],
   ["gyroscope", GyroNative],
   ["magnetometer", MagnNative],
-  ["barometer", BarNative]
+  ["barometer", BarNative],
+  ["rotation", RotateNative]
 ]);
 
 // Cache the availability of sensors
 const availableSensors = {};
 
 export function start(type) {
-  const api = nativeApis.get(type.toLocaleLowerCase());
+  const api = nativeApis.get(type.toLowerCase());
   api.startUpdates();
 }
 
@@ -32,7 +34,7 @@ export function isAvailable(type) {
     return availableSensors[type];
   }
 
-  const api = nativeApis.get(type.toLocaleLowerCase());
+  const api = nativeApis.get(type.toLowerCase());
   const promise = api.isAvailable();
   availableSensors[type] = promise;
 
@@ -40,11 +42,11 @@ export function isAvailable(type) {
 }
 
 export function stop(type) {
-  const api = nativeApis.get(type.toLocaleLowerCase());
+  const api = nativeApis.get(type.toLowerCase());
   api.stopUpdates();
 }
 
 export function setUpdateInterval(type, updateInterval) {
-  const api = nativeApis.get(type.toLocaleLowerCase());
+  const api = nativeApis.get(type.toLowerCase());
   api.setUpdateInterval(updateInterval);
 }

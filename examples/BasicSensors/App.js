@@ -8,7 +8,8 @@ const availableSensors = {
   accelerometer: axis,
   gyroscope: axis,
   magnetometer: axis,
-  barometer: ["pressure"]
+  barometer: ["pressure"],
+  rotation: ["alpha", "beta", "gamma", "orientation"]
 };
 const viewComponents = Object.entries(availableSensors).map(([name, values]) =>
   SensorView(name, values)

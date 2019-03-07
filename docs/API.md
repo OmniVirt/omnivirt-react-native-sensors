@@ -53,6 +53,16 @@ const subscription = barometer.subscribe(({ pressure }) =>
 
 Please note that this sensor has no option to set the update rate.
 
+## rotationVector: Observable<{alpha: number, beta: number, gamma: number, orientation: string}>
+
+```js
+import { rotation } from "react-native-sensors";
+
+const subscription = rotation.subscribe(({ x, y, z, timestamp }) =>
+  console.log({ x, y, z, timestamp })
+);
+```
+
 ## setUpdateIntervalForType(type: string, interval: number)
 
 As the sensors are global we can only set the rate in which the hardware is read globally.
